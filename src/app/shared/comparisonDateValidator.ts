@@ -1,6 +1,6 @@
 import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 
-export function  controlDatesAreEgual (controlNameStart: string, controlNameEnd: string, controlNameBitrh: string): ValidatorFn {
+export function  comparisonDateValidator (controlNameStart: string, controlNameEnd: string, controlNameBitrh: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const formGroup = control as FormGroup;
     let dateofControlStart = formGroup.get(controlNameStart)?.value;

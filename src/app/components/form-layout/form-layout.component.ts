@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Form} from '../../models/form.model';
-// import {Form} from "../../shared/form.interface"
 import {Validators, FormGroup, FormControl} from '@angular/forms';
 import {FormService} from '../../services/form.service';
-import {controlDatesAreEgual} from '../../shared/datadirective';
+import {comparisonDateValidator} from '../../shared/comparisonDateValidator';
 
 @Component({
   selector: 'app-form-layout',
@@ -45,7 +44,7 @@ export class FormLayoutComponent implements OnInit {
       // startdate: new FormControl('',{validators: dateLessThan('startdate','enddate')}),
       startdate: new FormControl(''),
       enddate: new FormControl(''),
-    }, {validators: controlDatesAreEgual('startdate', 'enddate', 'birthdate')});
+    }, {validators: comparisonDateValidator('startdate', 'enddate', 'birthdate')});
     console.log(this.userForm);
     this.getAllUsers();
   }

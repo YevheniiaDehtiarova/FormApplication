@@ -1,7 +1,7 @@
 {
   "posts": [
     {
-      "name": "Yevheniia",
+      "name": "Helen",
       "gender": {
         "text": "Female",
         "value": "Female"
@@ -13,16 +13,16 @@
       "id": 3
     },
     {
-      "name": "Anastasiya",
+      "name": "Dmytro",
       "gender": {
-        "text": "Female",
-        "value": "Female"
+        "text": "Male",
+        "value": "Male"
       },
-      "birthdate": "2021-06-10",
+      "birthdate": "2021-01-11",
       "direction": "qualityAssurance",
-      "startdate": "2021-07-10",
-      "enddate": "2021-07-09",
-      "id": 4
+      "startdate": "2021-07-08",
+      "enddate": "2021-06-01",
+      "id": 5
     }
   ],
   "comments": [],
