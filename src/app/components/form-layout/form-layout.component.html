@@ -1,0 +1,114 @@
+<button (click)="clickAddUsers()" type="button" class="btn-add btn-add__main" (click)="openModal()">Добавить
+  пользователя
+</button>
+
+<kendo-grid
+  [data]="userData"
+  (remove)="deleteUsers($event)"
+  (edit)="onEdit($event)">
+  <kendo-grid-column field="name" title="Имя"></kendo-grid-column>
+  <kendo-grid-column field="gender.value" title="Пол"></kendo-grid-column>
+  <kendo-grid-column field="birthdate" title="Дата рождения">{{userData | kendoDate: "dd/MM/yyyy"}} </kendo-grid-column>
+  <kendo-grid-column field="direction" title="Направлени обучения"></kendo-grid-column>
+  <kendo-grid-column field="startdate" title="Дата старта обучения"></kendo-grid-column>
+  <kendo-grid-column field="enddate" title="Дата окончания обучения"></kendo-grid-column>
+  <kendo-grid-command-column class="button-container" title="Команды обновления/удаления данных">
+    <ng-template kendoGridCellTemplate>
+      <button class="btn-add" kendoGridEditCommand (click)="openModal()">Edit</button>
+      <button class="btn-add" kendoGridRemoveCommand>Remove</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
+
+<div class="form__container" *ngIf="isModalDialogVisible">
+  <form novalidate class="k-form" [formGroup]="userForm">
+    <kendo-formfield class="form-control">
+      <kendo-label [for]="UserName" text="Имя пользователя"></kendo-label>
+      <input class="form-input" formControlName="name" kendoTextBox #UserName/>
+      <div *ngIf="userForm.get('name').invalid && userForm.get('name').touched" class="validation">
+        <small *ngIf="userForm.get('name').errors.required">
+          Поле имя не может быть пустым
+        </small>
+        <small *ngIf="userForm.get('name').errors.minlength">
+          Имя должно быть не меньше {{userForm.get('name').errors.minlength.requiredLength}} символов.
+        </small>
+        <small *ngIf="userForm.get('name').errors.maxlength">
+          Имя должно быть не больше {{userForm.get('name').errors.maxlength.requiredLength}} символов.
+        </small>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield class="form-control">
+      <kendo-label [for]="gender" text="Выберите пол"></kendo-label>
+      <kendo-dropdownlist class="form-input"
+                          #gender
+                          [data]="genders"
+                          [defaultItem]="{ text: 'Выберите пол', value: 'null'}"
+                          [textField]="'text'"
+                          [valueField]="'value'"
+                          formControlName="gender"
+                          required>
+      </kendo-dropdownlist>
+      <div *ngIf="userForm.get('gender').invalid && userForm.get('gender').touched" class="validation">
+        <small *ngIf="userForm.get('gender').errors.required">
+          Поле пол не может быть пустым,сделайте Ваш выбор
+        </small>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield class="form-control">
+      <p>Введите дату рождения</p>
+      <input class="form-input" formControlName="birthdate" placeholder="Type in your birth date..." type="date">
+      <div *ngIf="userForm.get('birthdate').touched" class="validation">
+        <small *ngIf="userForm.errors?.comparisonDate">
+          <span class="error">Дата рождения не может быть позже даты начала обучения и даты конца обучения</span>
+        </small>
+      </div>
+    </kendo-formfield>
+
+    <kendo-formfield class="form-control">
+      <kendo-label class="form-label">Направление обучения</kendo-label>
+      <select class="form-select" formControlName="direction" (change)="onDirectionChange()">
+        <option value="backend">backend</option>
+        <option value="frontend">frontend</option>
+        <option value="design">design</option>
+        <option value="projectManagement">projectManagement</option>
+        <option value="qualityAssurance">qualityAssurance</option>
+        <option value="businessAnalytic">businessAnalytic</option>
+      </select>
+      <div *ngIf="userForm.get('direction').invalid && userForm.get('direction').touched" class="validation">
+        <small *ngIf="userForm.get('direction').errors.required">
+          Поле направление обучения не может быть пустым,сделайте Ваш выбор
+        </small>
+      </div>
+    </kendo-formfield>
+
+    <kendo-formfield class="form-control">
+      <p>Введите дату начала обучения</p>
+      <input formControlName="startdate" class="form-input" placeholder="Type in your start date..." type="date">
+      <div *ngIf="userForm.get('startdate').touched" class="validation">
+        <small *ngIf="userForm.errors?.comparisonDate">
+          <span
+            class="error">Дата начала обучения не может быть раньше даты рождения или позже даты конца обучения</span>
+        </small>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield class="form-control">
+      <label class="form-label">Дата конца обучения</label>
+      <input type="date" class="form-input" formControlName="enddate">
+      <div *ngIf="userForm.get('enddate').touched" class="validation">
+        <small *ngIf="userForm.errors?.comparisonDate">
+          <span class="error">Дата конца обучения не может быть раньше даты рождения или даты начала обучения.</span>
+        </small>
+      </div>
+      <div *ngIf="userForm.get('direction').touched" class="validation">
+        <div *ngIf="userForm.get('enddate').hasError('required')">
+          <small>Дата конца обучения обязательна для заполнения</small>
+        </div>
+      </div>
+    </kendo-formfield>
+    <div class="button-container">
+      <button class="btn-add" id="cancel" type="submit" (click)="closeModal()">Отмена</button>
+      <button type="button" *ngIf="showAdd" (click)="postUsersDetails()" class="btn-add">Добавить</button>
+      <button type="button" *ngIf="showUpdate" (click)="updateUsers()" class="btn-add">Обновить</button>
+    </div>
+  </form>
+</div>

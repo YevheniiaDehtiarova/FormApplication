@@ -1,0 +1,136 @@
+.form__container{
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto 50px auto;
+  border: 2px solid aquamarine;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+.form__header{
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Open Sans", sans-serif;
+  font-size: 32px;
+  text-align: center;
+}
+.form-control {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+.form-input,
+.form-select,
+select{
+  width: 300px;
+  border: 2px solid aquamarine;
+  height: 40px;
+}
+.form-label{
+  width: 300px;
+}
+.button-container{
+  /*max-width: 250px;*/
+  width: 100%;
+  /*margin: 0 auto 30px auto;*/
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.form__button-container{
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto 30px auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.btn-add{
+  width: 100px;
+  border: 2px solid aquamarine;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 40px;
+}
+.btn-add:hover{
+  background-color: aquamarine;
+  color: black;
+}
+.btn-add{
+  width: 150px;
+  border: 2px solid aquamarine;
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  /*margin-bottom: 50px;*/
+}
+.btn-add__main{
+  height: 60px;
+}
+
+body{
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+.table-head,
+.table-row{
+  border: 1px solid black;
+}
+.table-head_cell,
+.table-row_cell{
+  border: 1px solid black;
+  height: 50px;
+  text-align: center;
+
+}
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+.form__container{
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+
+form-input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+form-input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+
+.k-grid .k-grid-edit-row td:not(.k-hierarchy-cell), .k-grid .k-command-cell, .k-grid .k-edit-cell {
+ display: flex !important;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.error{
+  width: 600px;
+  height: 40px;
+  color: red;
+}
+.validation{
+  width: 300px;
+  height: 40px;
+}
+.validation small{
+  color: red;
+}
+

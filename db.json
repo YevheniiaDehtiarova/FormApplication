@@ -1,0 +1,32 @@
+{
+  "posts": [
+    {
+      "name": "Yevheniia",
+      "gender": {
+        "text": "Female",
+        "value": "Female"
+      },
+      "birthdate": "2021-06-24",
+      "direction": "projectManagement",
+      "startdate": "2021-06-02",
+      "enddate": "2021-06-08",
+      "id": 3
+    },
+    {
+      "name": "Anastasiya",
+      "gender": {
+        "text": "Female",
+        "value": "Female"
+      },
+      "birthdate": "2021-06-10",
+      "direction": "qualityAssurance",
+      "startdate": "2021-07-10",
+      "enddate": "2021-07-09",
+      "id": 4
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
