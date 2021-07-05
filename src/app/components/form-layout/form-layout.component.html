@@ -4,15 +4,15 @@
 
 <kendo-grid
   [data]="userData"
-  (remove)="deleteUsers($event)"
-  (edit)="onEdit($event)">
+  (remove)="deleteUsers($event.dataItem)"
+  (edit)="onEdit($event.dataItem)">
   <kendo-grid-column field="name" title="Имя"></kendo-grid-column>
-  <kendo-grid-column field="gender.value" title="Пол"></kendo-grid-column>
+  <kendo-grid-column field="gender.text" title="Пол"></kendo-grid-column>
   <kendo-grid-column field="birthdate" title="Дата рождения">{{userData | kendoDate: "dd/MM/yyyy"}} </kendo-grid-column>
-  <kendo-grid-column field="direction" title="Направлени обучения"></kendo-grid-column>
+  <kendo-grid-column field="direction.text" title="Направлениe обучения"></kendo-grid-column>
   <kendo-grid-column field="startdate" title="Дата старта обучения"></kendo-grid-column>
   <kendo-grid-column field="enddate" title="Дата окончания обучения"></kendo-grid-column>
-  <kendo-grid-command-column class="button-container" title="Команды обновления/удаления данных">
+  <kendo-grid-command-column class="button-container" title="Обновить/удалить">
     <ng-template kendoGridCellTemplate>
       <button class="btn-add" kendoGridEditCommand (click)="openModal()">Edit</button>
       <button class="btn-add" kendoGridRemoveCommand>Remove</button>
@@ -22,6 +22,7 @@
 
 <div class="form__container" *ngIf="isModalDialogVisible">
   <form novalidate class="k-form" [formGroup]="userForm">
+
     <kendo-formfield class="form-control">
       <kendo-label [for]="UserName" text="Имя пользователя"></kendo-label>
       <input class="form-input" formControlName="name" kendoTextBox #UserName/>
@@ -37,6 +38,7 @@
         </small>
       </div>
     </kendo-formfield>
+
     <kendo-formfield class="form-control">
       <kendo-label [for]="gender" text="Выберите пол"></kendo-label>
       <kendo-dropdownlist class="form-input"
@@ -54,49 +56,56 @@
         </small>
       </div>
     </kendo-formfield>
+
     <kendo-formfield class="form-control">
-      <p>Введите дату рождения</p>
-      <input class="form-input" formControlName="birthdate" placeholder="Type in your birth date..." type="date">
-      <div *ngIf="userForm.get('birthdate').touched" class="validation">
-        <small *ngIf="userForm.errors?.comparisonDate">
-          <span class="error">Дата рождения не может быть позже даты начала обучения и даты конца обучения</span>
+      <kendo-label [for]="BirthDate" text="Введите дату рождения"></kendo-label>
+      <input class="form-input" formControlName="birthdate" placeholder="Type in your birth date..." type="date"
+             kendoTextBox #BirthDate>
+      <div *ngIf="userForm.get('birthdate').touched">
+        <small *ngIf="userForm.errors?.comparisonDate" class="validation">
+         <span class="error">Дата рождения не может быть позже <br>даты начала обучения и даты конца обучения  </span>
         </small>
       </div>
     </kendo-formfield>
 
+
     <kendo-formfield class="form-control">
-      <kendo-label class="form-label">Направление обучения</kendo-label>
-      <select class="form-select" formControlName="direction" (change)="onDirectionChange()">
-        <option value="backend">backend</option>
-        <option value="frontend">frontend</option>
-        <option value="design">design</option>
-        <option value="projectManagement">projectManagement</option>
-        <option value="qualityAssurance">qualityAssurance</option>
-        <option value="businessAnalytic">businessAnalytic</option>
-      </select>
+      <kendo-label [for]="direction" text="Направление обучения"></kendo-label>
+      <kendo-dropdownlist class="form-input"
+                          #direction
+                          [data]="directions"
+                          [defaultItem]="{ text: 'Выберите направление обучения', value: 'null'}"
+                          [textField]="'text'"
+                          [valueField]="'value'"
+                          formControlName="direction"
+                          required
+                          (valueChange)="onDirectionChange()">
+      </kendo-dropdownlist>
       <div *ngIf="userForm.get('direction').invalid && userForm.get('direction').touched" class="validation">
-        <small *ngIf="userForm.get('direction').errors.required">
-          Поле направление обучения не может быть пустым,сделайте Ваш выбор
+                <small *ngIf="userForm.get('direction').errors.required">
+                  Поле направление обучения не может быть пустым,сделайте Ваш выбор
+                </small>
+              </div>
+    </kendo-formfield>
+
+    <kendo-formfield class="form-control">
+      <kendo-label [for]="StartDate" text="Введите дату начала обучения"></kendo-label>
+      <input formControlName="startdate" class="form-input" placeholder="Type in your start date..." type="date"
+      kendoTextBox #StartDate>
+      <div *ngIf="userForm.get('startdate').touched">
+        <small *ngIf="userForm.errors?.comparisonDate" class="validation">
+          <span
+            class="error">Дата начала обучения не может быть раньше  <br>даты рождения или позже даты конца обучения</span>
         </small>
       </div>
     </kendo-formfield>
 
-    <kendo-formfield class="form-control">
-      <p>Введите дату начала обучения</p>
-      <input formControlName="startdate" class="form-input" placeholder="Type in your start date..." type="date">
-      <div *ngIf="userForm.get('startdate').touched" class="validation">
-        <small *ngIf="userForm.errors?.comparisonDate">
-          <span
-            class="error">Дата начала обучения не может быть раньше даты рождения или позже даты конца обучения</span>
-        </small>
-      </div>
-    </kendo-formfield>
     <kendo-formfield class="form-control">
       <label class="form-label">Дата конца обучения</label>
       <input type="date" class="form-input" formControlName="enddate">
-      <div *ngIf="userForm.get('enddate').touched" class="validation">
-        <small *ngIf="userForm.errors?.comparisonDate">
-          <span class="error">Дата конца обучения не может быть раньше даты рождения или даты начала обучения.</span>
+      <div *ngIf="userForm.get('enddate').touched">
+        <small *ngIf="userForm.errors?.comparisonDate" class="validation">
+          <span class="error">Дата конца обучения не может быть раньше <br> даты рождения или даты начала обучения.</span>
         </small>
       </div>
       <div *ngIf="userForm.get('direction').touched" class="validation">
@@ -105,10 +114,13 @@
         </div>
       </div>
     </kendo-formfield>
+
     <div class="button-container">
-      <button class="btn-add" id="cancel" type="submit" (click)="closeModal()">Отмена</button>
-      <button type="button" *ngIf="showAdd" (click)="postUsersDetails()" class="btn-add">Добавить</button>
-      <button type="button" *ngIf="showUpdate" (click)="updateUsers()" class="btn-add">Обновить</button>
+      <button class="btn-add" type="submit" (click)="closeModal()">Отмена</button>
+            <button type="button" *ngIf="isAddingState; else updateClick" (click)="postUsersDetails()" class="btn-add"  type="submit" [disabled]="userForm.invalid">Добавить</button>
+      <ng-template #updateClick>
+        <button type="button" (click)="updateUsers()" class="btn-add" type="submit" [disabled]="userForm.invalid">Обновить</button>
+      </ng-template>
     </div>
   </form>
 </div>

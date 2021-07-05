@@ -1,28 +1,49 @@
 {
   "posts": [
     {
-      "name": "Helen",
-      "gender": {
-        "text": "Female",
-        "value": "Female"
-      },
-      "birthdate": "2021-06-24",
-      "direction": "projectManagement",
-      "startdate": "2021-06-02",
-      "enddate": "2021-06-08",
-      "id": 3
-    },
-    {
-      "name": "Dmytro",
+      "name": "Dmytrik",
       "gender": {
         "text": "Male",
-        "value": "Male"
+        "value": "male"
       },
-      "birthdate": "2021-01-11",
-      "direction": "qualityAssurance",
-      "startdate": "2021-07-08",
-      "enddate": "2021-06-01",
-      "id": 5
+      "birthdate": "2021-06-28",
+      "direction": {
+        "text": "Backend",
+        "value": "backend"
+      },
+      "startdate": "2021-07-28",
+      "enddate": "2021-08-08",
+      "id": 9
+    },
+    {
+      "name": "Yevheniia",
+      "gender": {
+        "text": "Female",
+        "value": "female"
+      },
+      "birthdate": "2021-06-30",
+      "direction": {
+        "text": "Project Management",
+        "value": "projectManagement"
+      },
+      "startdate": "2021-07-29",
+      "enddate": "2021-08-08",
+      "id": 10
+    },
+    {
+      "name": "Svetik",
+      "gender": {
+        "text": "Male",
+        "value": "male"
+      },
+      "birthdate": "2021-06-30",
+      "direction": {
+        "text": "Business Analytic",
+        "value": "businessAnalytic"
+      },
+      "startdate": "2021-07-29",
+      "enddate": "2021-08-01",
+      "id": 11
     }
   ],
   "comments": [],

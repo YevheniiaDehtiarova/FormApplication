@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Form} from '../../models/form.model';
-import {Validators, FormGroup, FormControl} from '@angular/forms';
+import {Direction, Gender, User} from '../../shared/user.interface';
+import {selectedDirections, selectedGender} from '../../shared/user.enum';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FormService} from '../../services/form.service';
 import {comparisonDateValidator} from '../../shared/comparisonDateValidator';
 
@@ -11,26 +12,29 @@ import {comparisonDateValidator} from '../../shared/comparisonDateValidator';
 })
 export class FormLayoutComponent implements OnInit {
   public isModalDialogVisible = false;
-  showAdd!: boolean;
-  showUpdate !: boolean;
-  formModelObj: Form = new Form();
-  userData!: any;
+  public isAddingState: boolean;
+  formModelObj: User = new User();
+  userData: any = [];
   public userForm: FormGroup;
 
-  constructor(private formService: FormService) {
-  }
+  constructor(private formService: FormService) {}
 
-  public genders: Array<{ text: string; value: string }> = [
-    {text: 'Male', value: 'Male'},
-    {text: 'Female', value: 'Female'}
+  public genders: Array<Gender> = [
+    {text: 'Male', value: selectedGender.M},
+    {text: 'Female', value: selectedGender.F}
   ];
-  public gender: { text: string; value: string };
-
+  public directions: Array<Direction> = [
+    {text: 'Backend', value: selectedDirections.BE},
+    {text: 'Frontend', value: selectedDirections.FE},
+    {text: 'Design', value: selectedDirections.Design},
+    {text: 'Project Management', value: selectedDirections.PM},
+    {text: 'Quality Assurance', value: selectedDirections.QA},
+    {text: 'Business Analytic', value: selectedDirections.BA},
+  ];
 
   public openModal(): void {
     this.isModalDialogVisible = true;
   }
-
   public closeModal(): void {
     this.isModalDialogVisible = false;
   }
@@ -41,30 +45,36 @@ export class FormLayoutComponent implements OnInit {
       gender: new FormControl('', Validators.required),
       birthdate: new FormControl(''),
       direction: new FormControl('', Validators.required),
-      // startdate: new FormControl('',{validators: dateLessThan('startdate','enddate')}),
       startdate: new FormControl(''),
       enddate: new FormControl(''),
-    }, {validators: comparisonDateValidator('startdate', 'enddate', 'birthdate')});
-    console.log(this.userForm);
+    }, {validators: comparisonDateValidator('startdate', 'enddate', 'birthdate')}, this.onDirectionChange);
     this.getAllUsers();
   }
 
-  public onDirectionChange(): void {
-      let directionSelected = this.userForm.get('direction').value;
-      let DateControl = this.userForm.get('enddate');
-      if (directionSelected === 'design' || directionSelected === 'projectManagement' || directionSelected === 'qualityAssurance' || directionSelected === 'businessAnalytic') {
-        DateControl.setValidators([Validators.required])
-        DateControl.updateValueAndValidity();
-      } else {
-        DateControl.clearValidators();
-        DateControl.updateValueAndValidity();
-      }
+  submit() {
+    if (this.userForm.valid) {
+      console.log('Form: ', this.userForm);
+      this.userForm.reset();
     }
+  }
+
+  public onDirectionChange(): any {
+    const directionSelectedValue = this.userForm.get('direction').value.value;
+    const DateControl = this.userForm.get('enddate');
+    if (directionSelectedValue === selectedDirections.Design
+      || directionSelectedValue === selectedDirections.PM
+      || directionSelectedValue === selectedDirections.QA
+      || directionSelectedValue === selectedDirections.BA) {
+      DateControl.setValidators([Validators.required]);
+    } else {
+      DateControl.clearValidators();
+    }
+    DateControl.updateValueAndValidity();
+  }
 
   clickAddUsers(): void {
     this.userForm.reset();
-    this.showAdd = true;
-    this.showUpdate = false;
+    this.isAddingState = true;
   }
 
   postUsersDetails(): void {
@@ -72,43 +82,40 @@ export class FormLayoutComponent implements OnInit {
 
     this.formService.postUsers(this.formModelObj)
       .subscribe(res => {
-          console.log(res);
-          const ref = document.getElementById('cancel');
-          ref?.click();
           this.userForm.reset();
           this.getAllUsers();
+          this.closeModal();
         },
         err => {
-          alert('smth get wrong');
+          alert('something get wrong');
         });
   }
 
   getAllUsers(): void {
     this.formService.getUsers()
       .subscribe(res => {
-        console.log(res);
         this.userData = res;
       });
   }
 
-
-  deleteUsers(userData: any): void {
-    this.formService.deleteUsers(userData.dataItem.id)
+  deleteUsers(dataItem: any): void {
+    this.formService.deleteUsers(dataItem.id)
       .subscribe(res => {
         this.getAllUsers();
       });
   }
 
-  onEdit(userData: any): void {
-    this.showAdd = false;
-    this.showUpdate = true;
-    this.formModelObj.id = userData.dataItem.id;
-    this.userForm.controls.name.setValue(userData.dataItem.name);
-    this.userForm.controls.gender.setValue(userData.dataItem.gender);
-    this.userForm.controls.birthdate.setValue(userData.dataItem.birthdate);
-    this.userForm.controls.direction.setValue(userData.dataItem.direction);
-    this.userForm.controls.startdate.setValue(userData.dataItem.startdate);
-    this.userForm.controls.enddate.setValue(userData.dataItem.enddate);
+  onEdit(dataItem: any): void {
+    this.isAddingState = false;
+    this.formModelObj.id = dataItem.id;
+    this.userForm.setValue({
+      name: dataItem.name,
+      gender: dataItem.gender,
+      birthdate: dataItem.birthdate,
+      direction: dataItem.direction,
+      startdate: dataItem.startdate,
+      enddate: dataItem.enddate
+    });
   }
 
   updateUsers(): void {
@@ -121,10 +128,9 @@ export class FormLayoutComponent implements OnInit {
 
     this.formService.updateUsers(this.formModelObj, this.formModelObj.id)
       .subscribe((res => {
-        const ref = document.getElementById('cancel');
-        ref?.click();
         this.userForm.reset();
         this.getAllUsers();
+        this.closeModal();
       }));
   }
 
