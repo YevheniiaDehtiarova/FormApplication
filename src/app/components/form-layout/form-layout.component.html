@@ -21,7 +21,7 @@
 </kendo-grid>
 
 <div class="form__container" *ngIf="isModalDialogVisible">
-  <form novalidate class="k-form" [formGroup]="userForm">
+  <form class="k-form" [formGroup]="userForm" (ngSubmit)="submit()">
 
     <kendo-formfield class="form-control">
       <kendo-label [for]="UserName" text="Имя пользователя"></kendo-label>
@@ -108,8 +108,8 @@
           <span class="error">Дата конца обучения не может быть раньше <br> даты рождения или даты начала обучения.</span>
         </small>
       </div>
-      <div *ngIf="userForm.get('direction').touched" class="validation">
-        <div *ngIf="userForm.get('enddate').hasError('required')">
+      <div *ngIf="userForm.get('direction').touched">
+        <div *ngIf="userForm.get('enddate').hasError('required')" class="validation">
           <small>Дата конца обучения обязательна для заполнения</small>
         </div>
       </div>

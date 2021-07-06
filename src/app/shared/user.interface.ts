@@ -7,7 +7,6 @@ export class User {
   public startdate: Date;
   public enddate: Date;
 }
-
 export class Gender {
   text: string;
   value: string;

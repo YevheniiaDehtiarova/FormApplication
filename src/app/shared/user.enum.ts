@@ -9,5 +9,5 @@ export enum selectedDirections {
 
 export enum selectedGender {
   M = 'male',
-  F = 'female'
+  F = 'female',
 }

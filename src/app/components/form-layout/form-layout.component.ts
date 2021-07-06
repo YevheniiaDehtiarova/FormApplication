@@ -17,7 +17,8 @@ export class FormLayoutComponent implements OnInit {
   userData: any = [];
   public userForm: FormGroup;
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: FormService) {
+  }
 
   public genders: Array<Gender> = [
     {text: 'Male', value: selectedGender.M},
@@ -35,6 +36,7 @@ export class FormLayoutComponent implements OnInit {
   public openModal(): void {
     this.isModalDialogVisible = true;
   }
+
   public closeModal(): void {
     this.isModalDialogVisible = false;
   }
@@ -51,25 +53,26 @@ export class FormLayoutComponent implements OnInit {
     this.getAllUsers();
   }
 
-  submit() {
+  submit(): void {
     if (this.userForm.valid) {
-      console.log('Form: ', this.userForm);
       this.userForm.reset();
     }
   }
 
   public onDirectionChange(): any {
-    const directionSelectedValue = this.userForm.get('direction').value.value;
     const DateControl = this.userForm.get('enddate');
-    if (directionSelectedValue === selectedDirections.Design
-      || directionSelectedValue === selectedDirections.PM
-      || directionSelectedValue === selectedDirections.QA
-      || directionSelectedValue === selectedDirections.BA) {
-      DateControl.setValidators([Validators.required]);
-    } else {
-      DateControl.clearValidators();
-    }
-    DateControl.updateValueAndValidity();
+    this.userForm.get('direction').valueChanges
+      .subscribe((v) => {
+        if (v.value === selectedDirections.PM
+          || v.value === selectedDirections.BA
+          || v.value === selectedDirections.QA
+          || v.value === selectedDirections.Design) {
+          DateControl.setValidators([Validators.required]);
+        } else {
+          DateControl.clearValidators();
+        }
+        DateControl.updateValueAndValidity();
+      });
   }
 
   clickAddUsers(): void {
@@ -79,7 +82,6 @@ export class FormLayoutComponent implements OnInit {
 
   postUsersDetails(): void {
     this.formModelObj = this.userForm.value;
-
     this.formService.postUsers(this.formModelObj)
       .subscribe(res => {
           this.userForm.reset();
@@ -104,7 +106,6 @@ export class FormLayoutComponent implements OnInit {
         this.getAllUsers();
       });
   }
-
   onEdit(dataItem: any): void {
     this.isAddingState = false;
     this.formModelObj.id = dataItem.id;

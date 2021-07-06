@@ -68,10 +68,17 @@ select{
   border: 2px solid aquamarine;
   color: black;
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  /*margin-bottom: 50px;*/
+}
+
+.k-grid {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  text-align: center;
 }
 .btn-add__main{
   height: 60px;

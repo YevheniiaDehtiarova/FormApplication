@@ -1,21 +1,7 @@
 {
   "posts": [
     {
-      "name": "Dmytrik",
-      "gender": {
-        "text": "Male",
-        "value": "male"
-      },
-      "birthdate": "2021-06-28",
-      "direction": {
-        "text": "Backend",
-        "value": "backend"
-      },
-      "startdate": "2021-07-28",
-      "enddate": "2021-08-08",
-      "id": 9
-    },
-    {
+      "id": 10,
       "name": "Yevheniia",
       "gender": {
         "text": "Female",
@@ -23,12 +9,11 @@
       },
       "birthdate": "2021-06-30",
       "direction": {
-        "text": "Project Management",
-        "value": "projectManagement"
+        "text": "Backend",
+        "value": "backend"
       },
       "startdate": "2021-07-29",
-      "enddate": "2021-08-08",
-      "id": 10
+      "enddate": "2021-08-08"
     },
     {
       "name": "Svetik",
@@ -38,12 +23,42 @@
       },
       "birthdate": "2021-06-30",
       "direction": {
-        "text": "Business Analytic",
-        "value": "businessAnalytic"
+        "text": "Frontend",
+        "value": "frontend"
       },
       "startdate": "2021-07-29",
       "enddate": "2021-08-01",
       "id": 11
+    },
+    {
+      "name": "Dmytrik",
+      "gender": {
+        "text": "Male",
+        "value": "male"
+      },
+      "birthdate": "2021-06-01",
+      "direction": {
+        "text": "Quality Assurance",
+        "value": "qualityAssurance"
+      },
+      "startdate": "2021-06-29",
+      "enddate": "2021-07-30",
+      "id": 12
+    },
+    {
+      "name": "Irirna",
+      "gender": {
+        "text": "Male",
+        "value": "male"
+      },
+      "birthdate": "2021-06-07",
+      "direction": {
+        "text": "Design",
+        "value": "design"
+      },
+      "startdate": "2021-08-03",
+      "enddate": "2021-08-07",
+      "id": 13
     }
   ],
   "comments": [],
