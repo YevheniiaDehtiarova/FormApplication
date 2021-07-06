@@ -22,7 +22,6 @@
 
 <div class="form__container" *ngIf="isModalDialogVisible">
   <form class="k-form" [formGroup]="userForm" (ngSubmit)="submit()">
-
     <kendo-formfield class="form-control">
       <kendo-label [for]="UserName" text="Имя пользователя"></kendo-label>
       <input class="form-input" formControlName="name" kendoTextBox #UserName/>
@@ -38,7 +37,6 @@
         </small>
       </div>
     </kendo-formfield>
-
     <kendo-formfield class="form-control">
       <kendo-label [for]="gender" text="Выберите пол"></kendo-label>
       <kendo-dropdownlist class="form-input"
@@ -56,7 +54,6 @@
         </small>
       </div>
     </kendo-formfield>
-
     <kendo-formfield class="form-control">
       <kendo-label [for]="BirthDate" text="Введите дату рождения"></kendo-label>
       <input class="form-input" formControlName="birthdate" placeholder="Type in your birth date..." type="date"
@@ -67,8 +64,6 @@
         </small>
       </div>
     </kendo-formfield>
-
-
     <kendo-formfield class="form-control">
       <kendo-label [for]="direction" text="Направление обучения"></kendo-label>
       <kendo-dropdownlist class="form-input"
@@ -87,7 +82,6 @@
                 </small>
               </div>
     </kendo-formfield>
-
     <kendo-formfield class="form-control">
       <kendo-label [for]="StartDate" text="Введите дату начала обучения"></kendo-label>
       <input formControlName="startdate" class="form-input" placeholder="Type in your start date..." type="date"
@@ -99,7 +93,6 @@
         </small>
       </div>
     </kendo-formfield>
-
     <kendo-formfield class="form-control">
       <label class="form-label">Дата конца обучения</label>
       <input type="date" class="form-input" formControlName="enddate">

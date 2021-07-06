@@ -1,64 +1,49 @@
 {
   "posts": [
     {
-      "id": 10,
-      "name": "Yevheniia",
-      "gender": {
-        "text": "Female",
-        "value": "female"
-      },
-      "birthdate": "2021-06-30",
-      "direction": {
-        "text": "Backend",
-        "value": "backend"
-      },
-      "startdate": "2021-07-29",
-      "enddate": "2021-08-08"
-    },
-    {
-      "name": "Svetik",
+      "id": 11,
+      "name": "Svetlana",
       "gender": {
         "text": "Male",
         "value": "male"
       },
       "birthdate": "2021-06-30",
-      "direction": {
-        "text": "Frontend",
-        "value": "frontend"
-      },
-      "startdate": "2021-07-29",
-      "enddate": "2021-08-01",
-      "id": 11
-    },
-    {
-      "name": "Dmytrik",
-      "gender": {
-        "text": "Male",
-        "value": "male"
-      },
-      "birthdate": "2021-06-01",
       "direction": {
         "text": "Quality Assurance",
         "value": "qualityAssurance"
       },
-      "startdate": "2021-06-29",
-      "enddate": "2021-07-30",
-      "id": 12
+      "startdate": "2021-07-29",
+      "enddate": "2021-08-01"
     },
     {
-      "name": "Irirna",
+      "id": 13,
+      "name": "Dmytro",
       "gender": {
         "text": "Male",
         "value": "male"
       },
       "birthdate": "2021-06-07",
       "direction": {
-        "text": "Design",
-        "value": "design"
+        "text": "Backend",
+        "value": "backend"
       },
       "startdate": "2021-08-03",
-      "enddate": "2021-08-07",
-      "id": 13
+      "enddate": "2021-08-07"
+    },
+    {
+      "name": "Alexey",
+      "gender": {
+        "text": "Male",
+        "value": "male"
+      },
+      "birthdate": "2021-07-06",
+      "direction": {
+        "text": "Business Analytic",
+        "value": "businessAnalytic"
+      },
+      "startdate": "2021-07-28",
+      "enddate": "2021-08-08",
+      "id": 14
     }
   ],
   "comments": [],

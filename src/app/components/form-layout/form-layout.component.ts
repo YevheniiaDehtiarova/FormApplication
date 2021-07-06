@@ -16,9 +16,9 @@ export class FormLayoutComponent implements OnInit {
   formModelObj: User = new User();
   userData: any = [];
   public userForm: FormGroup;
+  public subscription: any;
 
-  constructor(private formService: FormService) {
-  }
+  constructor(private formService: FormService) {}
 
   public genders: Array<Gender> = [
     {text: 'Male', value: selectedGender.M},
@@ -32,12 +32,11 @@ export class FormLayoutComponent implements OnInit {
     {text: 'Quality Assurance', value: selectedDirections.QA},
     {text: 'Business Analytic', value: selectedDirections.BA},
   ];
-
   public openModal(): void {
     this.isModalDialogVisible = true;
   }
-
   public closeModal(): void {
+    this.userForm.reset();
     this.isModalDialogVisible = false;
   }
 
@@ -49,7 +48,7 @@ export class FormLayoutComponent implements OnInit {
       direction: new FormControl('', Validators.required),
       startdate: new FormControl(''),
       enddate: new FormControl(''),
-    }, {validators: comparisonDateValidator('startdate', 'enddate', 'birthdate')}, this.onDirectionChange);
+    }, {validators: comparisonDateValidator('startdate', 'enddate', 'birthdate')});
     this.getAllUsers();
   }
 
@@ -61,15 +60,12 @@ export class FormLayoutComponent implements OnInit {
 
   public onDirectionChange(): any {
     const DateControl = this.userForm.get('enddate');
-    this.userForm.get('direction').valueChanges
+    this.subscription = this.userForm.get('direction').valueChanges
       .subscribe((v) => {
-        if (v.value === selectedDirections.PM
-          || v.value === selectedDirections.BA
-          || v.value === selectedDirections.QA
-          || v.value === selectedDirections.Design) {
-          DateControl.setValidators([Validators.required]);
-        } else {
+        if (v.value === selectedDirections.BE || v.value === selectedDirections.FE) {
           DateControl.clearValidators();
+        } else {
+          DateControl.setValidators([Validators.required]);
         }
         DateControl.updateValueAndValidity();
       });
@@ -78,6 +74,10 @@ export class FormLayoutComponent implements OnInit {
   clickAddUsers(): void {
     this.userForm.reset();
     this.isAddingState = true;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   postUsersDetails(): void {
@@ -106,6 +106,7 @@ export class FormLayoutComponent implements OnInit {
         this.getAllUsers();
       });
   }
+
   onEdit(dataItem: any): void {
     this.isAddingState = false;
     this.formModelObj.id = dataItem.id;
@@ -134,5 +135,4 @@ export class FormLayoutComponent implements OnInit {
         this.closeModal();
       }));
   }
-
 }
