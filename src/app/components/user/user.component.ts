@@ -83,10 +83,9 @@ export class UserComponent implements OnInit, OnDestroy {
     this.isAddingState = true;
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 
   public postUsersDetails(): void {
     this.formModelObj = this.userForm.value;
