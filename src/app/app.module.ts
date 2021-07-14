@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormLayoutComponent } from './components/form-layout/form-layout.component';
+import { UserComponent } from './components/user/user.component';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { LabelModule } from '@progress/kendo-angular-label';
@@ -18,7 +18,7 @@ import {IntlModule} from '@progress/kendo-angular-intl';
 @NgModule({
   declarations: [
     AppComponent,
-    FormLayoutComponent
+    UserComponent
   ],
   imports: [
     BrowserModule,

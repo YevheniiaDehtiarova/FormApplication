@@ -1,36 +1,7 @@
 {
   "posts": [
     {
-      "id": 11,
-      "name": "Svetlana",
-      "gender": {
-        "text": "Male",
-        "value": "male"
-      },
-      "birthdate": "2021-06-30",
-      "direction": {
-        "text": "Quality Assurance",
-        "value": "qualityAssurance"
-      },
-      "startdate": "2021-07-29",
-      "enddate": "2021-08-01"
-    },
-    {
-      "id": 13,
-      "name": "Dmytro",
-      "gender": {
-        "text": "Male",
-        "value": "male"
-      },
-      "birthdate": "2021-06-07",
-      "direction": {
-        "text": "Backend",
-        "value": "backend"
-      },
-      "startdate": "2021-08-03",
-      "enddate": "2021-08-07"
-    },
-    {
+      "id": 14,
       "name": "Alexey",
       "gender": {
         "text": "Male",
@@ -38,12 +9,41 @@
       },
       "birthdate": "2021-07-06",
       "direction": {
+        "text": "Quality Assurance",
+        "value": "qualityAssurance"
+      },
+      "startdate": "2021-07-28",
+      "enddate": "2021-08-08"
+    },
+    {
+      "id": 15,
+      "name": "Dmytrik",
+      "gender": {
+        "text": "Male",
+        "value": "male"
+      },
+      "birthdate": "2021-06-25",
+      "direction": {
         "text": "Business Analytic",
         "value": "businessAnalytic"
       },
-      "startdate": "2021-07-28",
-      "enddate": "2021-08-08",
-      "id": 14
+      "startdate": "2021-07-01",
+      "enddate": "2021-07-08"
+    },
+    {
+      "id": 16,
+      "name": "Yevheniiia",
+      "gender": {
+        "text": "Female",
+        "value": "female"
+      },
+      "birthdate": "2021-06-29",
+      "direction": {
+        "text": "Backend",
+        "value": "backend"
+      },
+      "startdate": "2021-07-05",
+      "enddate": "2021-07-05"
     }
   ],
   "comments": [],

@@ -1,46 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {Direction, Gender, User} from '../../shared/user.interface';
-import {selectedDirections, selectedGender} from '../../shared/user.enum';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {User} from '../../models/user.interface';
+import {Gender} from '../../models/enums/gender.enum';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {FormService} from '../../services/form.service';
+import {UserService} from '../../services/user.service';
 import {comparisonDateValidator} from '../../shared/comparisonDateValidator';
+import {SingleSelect} from '../../models/singleselect.interface';
+import {Directions} from '../../models/enums/direction.enum';
+import {Subscription} from 'rxjs';
+
 
 @Component({
-  selector: 'app-form-layout',
-  templateUrl: './form-layout.component.html',
-  styleUrls: ['./form-layout.component.css']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
-export class FormLayoutComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
   public isModalDialogVisible = false;
   public isAddingState: boolean;
-  formModelObj: User = new User();
-  userData: any = [];
+  public formModelObj: User = new User();
+  public userData: Array<User> = [];
   public userForm: FormGroup;
-  public subscription: any;
+  private subscription: Subscription;
 
-  constructor(private formService: FormService) {}
+  constructor(private userService: UserService) {
+  }
 
-  public genders: Array<Gender> = [
-    {text: 'Male', value: selectedGender.M},
-    {text: 'Female', value: selectedGender.F}
+  public genders: Array<SingleSelect> = [
+    {text: 'Male', value: Gender.Male},
+    {text: 'Female', value: Gender.Female}
   ];
-  public directions: Array<Direction> = [
-    {text: 'Backend', value: selectedDirections.BE},
-    {text: 'Frontend', value: selectedDirections.FE},
-    {text: 'Design', value: selectedDirections.Design},
-    {text: 'Project Management', value: selectedDirections.PM},
-    {text: 'Quality Assurance', value: selectedDirections.QA},
-    {text: 'Business Analytic', value: selectedDirections.BA},
+  public directions: Array<SingleSelect> = [
+    {text: 'Backend', value: Directions.BE},
+    {text: 'Frontend', value: Directions.FE},
+    {text: 'Design', value: Directions.Design},
+    {text: 'Project Management', value: Directions.PM},
+    {text: 'Quality Assurance', value: Directions.QA},
+    {text: 'Business Analytic', value: Directions.BA},
   ];
+
   public openModal(): void {
     this.isModalDialogVisible = true;
   }
+
   public closeModal(): void {
     this.userForm.reset();
     this.isModalDialogVisible = false;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.userForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
       gender: new FormControl('', Validators.required),
@@ -52,17 +59,17 @@ export class FormLayoutComponent implements OnInit {
     this.getAllUsers();
   }
 
-  submit(): void {
+  public submit(): void {
     if (this.userForm.valid) {
       this.userForm.reset();
     }
   }
 
-  public onDirectionChange(): any {
+  public onDirectionChange(): void {
     const DateControl = this.userForm.get('enddate');
     this.subscription = this.userForm.get('direction').valueChanges
-      .subscribe((v) => {
-        if (v.value === selectedDirections.BE || v.value === selectedDirections.FE) {
+      .subscribe((dir) => {
+        if (dir.value === Directions.BE || dir.value === Directions.FE) {
           DateControl.clearValidators();
         } else {
           DateControl.setValidators([Validators.required]);
@@ -71,7 +78,7 @@ export class FormLayoutComponent implements OnInit {
       });
   }
 
-  clickAddUsers(): void {
+  public clickAddUser(): void {
     this.userForm.reset();
     this.isAddingState = true;
   }
@@ -80,10 +87,11 @@ export class FormLayoutComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  postUsersDetails(): void {
+
+  public postUsersDetails(): void {
     this.formModelObj = this.userForm.value;
-    this.formService.postUsers(this.formModelObj)
-      .subscribe(res => {
+    this.userService.postUser(this.formModelObj)
+      .subscribe(() => {
           this.userForm.reset();
           this.getAllUsers();
           this.closeModal();
@@ -93,21 +101,21 @@ export class FormLayoutComponent implements OnInit {
         });
   }
 
-  getAllUsers(): void {
-    this.formService.getUsers()
+  public getAllUsers(): void {
+    this.userService.getUsers()
       .subscribe(res => {
         this.userData = res;
       });
   }
 
-  deleteUsers(dataItem: any): void {
-    this.formService.deleteUsers(dataItem.id)
+  public deleteUser(dataItem: User): void {
+    this.userService.deleteUser(dataItem.id)
       .subscribe(res => {
         this.getAllUsers();
       });
   }
 
-  onEdit(dataItem: any): void {
+  public onEdit(dataItem: User): void {
     this.isAddingState = false;
     this.formModelObj.id = dataItem.id;
     this.userForm.setValue({
@@ -120,19 +128,22 @@ export class FormLayoutComponent implements OnInit {
     });
   }
 
-  updateUsers(): void {
-    this.formModelObj.name = this.userForm.value.name;
-    this.formModelObj.gender = this.userForm.value.gender;
-    this.formModelObj.birthdate = this.userForm.value.birthdate;
-    this.formModelObj.direction = this.userForm.value.direction;
-    this.formModelObj.startdate = this.userForm.value.startdate;
-    this.formModelObj.enddate = this.userForm.value.enddate;
+  public updateUser(): void {
+    this.formModelObj = {
+      id: this.formModelObj.id,
+      name: this.userForm.value.name,
+      gender: this.userForm.value.gender,
+      birthdate: this.userForm.value.birthdate,
+      direction: this.userForm.value.direction,
+      startdate: this.userForm.value.startdate,
+      enddate: this.userForm.value.enddate
+    };
 
-    this.formService.updateUsers(this.formModelObj, this.formModelObj.id)
-      .subscribe((res => {
+    this.userService.updateUser(this.formModelObj, this.formModelObj.id)
+      .subscribe(() => {
         this.userForm.reset();
         this.getAllUsers();
         this.closeModal();
-      }));
+      });
   }
 }

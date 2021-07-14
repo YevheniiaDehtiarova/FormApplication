@@ -1,10 +1,10 @@
-<button (click)="clickAddUsers()" type="button" class="btn-add btn-add__main" (click)="openModal()">Добавить
+<button (click)="clickAddUser()" type="button" class="btn-add btn-add__main" (click)="openModal()">Добавить
   пользователя
 </button>
 
 <kendo-grid
   [data]="userData"
-  (remove)="deleteUsers($event.dataItem)"
+  (remove)="deleteUser($event.dataItem)"
   (edit)="onEdit($event.dataItem)">
   <kendo-grid-column field="name" title="Имя"></kendo-grid-column>
   <kendo-grid-column field="gender.text" title="Пол"></kendo-grid-column>
@@ -112,7 +112,7 @@
       <button class="btn-add" type="submit" (click)="closeModal()">Отмена</button>
             <button type="button" *ngIf="isAddingState; else updateClick" (click)="postUsersDetails()" class="btn-add"  type="submit" [disabled]="userForm.invalid">Добавить</button>
       <ng-template #updateClick>
-        <button type="button" (click)="updateUsers()" class="btn-add" type="submit" [disabled]="userForm.invalid">Обновить</button>
+        <button type="button" (click)="updateUser()" class="btn-add" type="submit" [disabled]="userForm.invalid">Обновить</button>
       </ng-template>
     </div>
   </form>
