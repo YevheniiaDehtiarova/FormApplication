@@ -30,12 +30,12 @@ export class UserComponent implements OnInit, OnDestroy {
     {text: 'Female', value: Gender.Female}
   ];
   public directions: Array<SingleSelect> = [
-    {text: 'Backend', value: Directions.BE},
-    {text: 'Frontend', value: Directions.FE},
+    {text: 'Backend', value: Directions.Backend},
+    {text: 'Frontend', value: Directions.Frontend},
     {text: 'Design', value: Directions.Design},
-    {text: 'Project Management', value: Directions.PM},
-    {text: 'Quality Assurance', value: Directions.QA},
-    {text: 'Business Analytic', value: Directions.BA},
+    {text: 'Project Management', value: Directions.ProjectManagment},
+    {text: 'Quality Assurance', value: Directions.QualityAssurance},
+    {text: 'Business Analytic', value: Directions.BusinessAnalysis},
   ];
 
   public openModal(): void {
@@ -69,7 +69,7 @@ export class UserComponent implements OnInit, OnDestroy {
     const DateControl = this.userForm.get('enddate');
     this.subscription = this.userForm.get('direction').valueChanges
       .subscribe((dir) => {
-        if (dir.value === Directions.BE || dir.value === Directions.FE) {
+        if (dir.value === Directions.Backend || dir.value === Directions.Frontend) {
           DateControl.clearValidators();
         } else {
           DateControl.setValidators([Validators.required]);

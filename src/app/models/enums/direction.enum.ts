@@ -1,8 +1,8 @@
 export enum Directions {
-  BE = 'backend',
-  FE = 'frontend',
+  Backend = 'backend',
+  Frontend = 'frontend',
   Design = 'design',
-  PM = 'projectManagement',
-  QA = 'qualityAssurance',
-  BA = 'businessAnalytic',
+  ProjectManagment = 'projectManagement',
+  QualityAssurance = 'qualityAssurance',
+  BusinessAnalysis = 'businessAnalytic',
 }
