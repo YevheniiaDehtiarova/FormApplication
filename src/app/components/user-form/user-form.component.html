@@ -1,25 +1,6 @@
 <button (click)="clickAddUser()" type="button" class="btn-add btn-add__main" (click)="openModal()">Добавить
   пользователя
 </button>
-
-<kendo-grid
-  [data]="userData"
-  (remove)="deleteUser($event.dataItem)"
-  (edit)="onEdit($event.dataItem)">
-  <kendo-grid-column field="name" title="Имя"></kendo-grid-column>
-  <kendo-grid-column field="gender.text" title="Пол"></kendo-grid-column>
-  <kendo-grid-column field="birthdate" title="Дата рождения">{{userData | kendoDate: "dd/MM/yyyy"}} </kendo-grid-column>
-  <kendo-grid-column field="direction.text" title="Направлениe обучения"></kendo-grid-column>
-  <kendo-grid-column field="startdate" title="Дата старта обучения"></kendo-grid-column>
-  <kendo-grid-column field="enddate" title="Дата окончания обучения"></kendo-grid-column>
-  <kendo-grid-command-column class="button-container" title="Обновить/удалить">
-    <ng-template kendoGridCellTemplate>
-      <button class="btn-add" kendoGridEditCommand (click)="openModal()">Edit</button>
-      <button class="btn-add" kendoGridRemoveCommand>Remove</button>
-    </ng-template>
-  </kendo-grid-command-column>
-</kendo-grid>
-
 <div class="form__container" *ngIf="isModalDialogVisible">
   <form class="k-form" [formGroup]="userForm" (ngSubmit)="submit()">
     <kendo-formfield class="form-control">
@@ -60,7 +41,7 @@
              kendoTextBox #BirthDate>
       <div *ngIf="userForm.get('birthdate').touched">
         <small *ngIf="userForm.errors?.comparisonDate" class="validation">
-         <span class="error">Дата рождения не может быть позже <br>даты начала обучения и даты конца обучения  </span>
+          <span class="error">Дата рождения не может быть позже <br>даты начала обучения и даты конца обучения  </span>
         </small>
       </div>
     </kendo-formfield>
@@ -77,15 +58,15 @@
                           (valueChange)="onDirectionChange()">
       </kendo-dropdownlist>
       <div *ngIf="userForm.get('direction').invalid && userForm.get('direction').touched" class="validation">
-                <small *ngIf="userForm.get('direction').errors.required">
-                  Поле направление обучения не может быть пустым,сделайте Ваш выбор
-                </small>
-              </div>
+        <small *ngIf="userForm.get('direction').errors.required">
+          Поле направление обучения не может быть пустым,сделайте Ваш выбор
+        </small>
+      </div>
     </kendo-formfield>
     <kendo-formfield class="form-control">
       <kendo-label [for]="StartDate" text="Введите дату начала обучения"></kendo-label>
       <input formControlName="startdate" class="form-input" placeholder="Type in your start date..." type="date"
-      kendoTextBox #StartDate>
+             kendoTextBox #StartDate>
       <div *ngIf="userForm.get('startdate').touched">
         <small *ngIf="userForm.errors?.comparisonDate" class="validation">
           <span
@@ -98,7 +79,8 @@
       <input type="date" class="form-input" formControlName="enddate">
       <div *ngIf="userForm.get('enddate').touched">
         <small *ngIf="userForm.errors?.comparisonDate" class="validation">
-          <span class="error">Дата конца обучения не может быть раньше <br> даты рождения или даты начала обучения.</span>
+          <span
+            class="error">Дата конца обучения не может быть раньше <br> даты рождения или даты начала обучения.</span>
         </small>
       </div>
       <div *ngIf="userForm.get('direction').touched">
@@ -110,10 +92,8 @@
 
     <div class="button-container">
       <button class="btn-add" type="submit" (click)="closeModal()">Отмена</button>
-            <button type="button" *ngIf="isAddingState; else updateClick" (click)="postUsersDetails()" class="btn-add"  type="submit" [disabled]="userForm.invalid">Добавить</button>
-      <ng-template #updateClick>
-        <button type="button" (click)="updateUser()" class="btn-add" type="submit" [disabled]="userForm.invalid">Обновить</button>
-      </ng-template>
+      <button *ngIf="!isFormForEdit" class="btn-add" (click)="submit()">Добавить</button>
+      <button *ngIf="isFormForEdit" class="btn-add" (click)="updateSubmit()">Обновить</button>
     </div>
   </form>
 </div>

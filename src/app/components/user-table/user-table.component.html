@@ -1,0 +1,18 @@
+<kendo-grid
+  [data]="users"
+  (remove)="deleteUser($event.dataItem)"
+  (edit)="onEdit($event.dataItem)"
+  (add)="editModal()">
+  <kendo-grid-column field="name" title="Имя"></kendo-grid-column>
+  <kendo-grid-column field="gender.text" title="Пол"></kendo-grid-column>
+  <kendo-grid-column field="birthdate" title="Дата рождения">{{users | kendoDate: "dd/MM/yyyy"}} </kendo-grid-column>
+  <kendo-grid-column field="direction.text" title="Направлениe обучения"></kendo-grid-column>
+  <kendo-grid-column field="startdate" title="Дата старта обучения"></kendo-grid-column>
+  <kendo-grid-column field="enddate" title="Дата окончания обучения"></kendo-grid-column>
+  <kendo-grid-command-column class="button-container" title="Обновить/удалить">
+    <ng-template kendoGridCellTemplate>
+      <button class="btn-add" kendoGridEditCommand (click)="openModal()">Edit</button>
+      <button class="btn-add" kendoGridRemoveCommand>Remove</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
